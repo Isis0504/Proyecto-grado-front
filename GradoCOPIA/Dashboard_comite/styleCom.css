@@ -1,0 +1,369 @@
+/* ===== ESTILOS GENERALES ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #f7fbe8, #e1f7d5);
+  color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ===== BARRA SUPERIOR ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2e7d32; /* verde institucional */
+  color: #fff;
+  padding: 12px 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: #fdd835; /* amarillo */
+  color: #2e7d32;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  width: auto;           /* evita que ocupe todo el ancho */
+  display: inline-block; /* se ajusta al texto */
+}
+.logout-btn:hover {
+  background: #ffee58;
+  transform: scale(1.05);
+}
+
+/* ===== LAYOUT GENERAL ===== */
+.dashboard {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 220px;
+  background: #388e3c; /* verde oscuro */
+  padding-top: 20px;
+  color: #fff;
+  border-right: 3px solid #c5e1a5;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar li {
+  margin: 12px 0;
+}
+.sidebar a {
+  color: #f9fbe7;
+  text-decoration: none;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  background: #43a047;
+  color: #fff;
+  border-left: 5px solid #fdd835;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.contenido {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: #f9fff2;
+}
+.contenido h2 {
+  color: #2e7d32;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #333;
+}
+.card h3 {
+  color: #2e7d32;
+}
+
+/* ===== TABLAS ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+th {
+  background: #2e7d32;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ===== ESTADOS ===== */
+.pagado {
+  color: #2e7d32; /* verde */
+  font-weight: bold;
+}
+.pendiente {
+  color: #f9a825; /* amarillo */
+  font-weight: bold;
+}
+.aprobado {
+  color: #388e3c;
+}
+.denegado {
+  color: #e53935;
+}
+
+/* ===== FORMULARIOS ===== */
+input, select, textarea, button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+input, select, textarea {
+  background: #f9fbe7;
+}
+button {
+  background: #2e7d32;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #43a047;
+}
+
+/* ===== FORMULARIO DE NUEVA SOLICITUD ===== */
+.contenido-solicitudes .formulario {
+  max-width: 700px; /* más ancho */
+  width: 90%;
+  margin: 0 auto;
+}
+.contenido-solicitudes textarea {
+  min-height: 100px;
+}
+
+/* ===== NOTIFICACIONES ===== */
+#notificaciones {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.notificacion {
+  background: #2e7d32;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.notificacion.exito {
+  background: #4caf50;
+}
+.notificacion.error {
+  background: #e53935;
+}
+
+/* ===== COMUNICACIÓN INTERNA ===== */
+#listaAnuncios, #listaActividades, #foroMensajes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#listaAnuncios li, #listaActividades li, #foroMensajes li {
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+#listaAnuncios li::before {
+  content: "📢 ";
+}
+#listaActividades li::before {
+  content: "📅 ";
+}
+#foroMensajes li b {
+  color: #2e7d32;
+}
+#formForo {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+#formForo input {
+  flex: 1;
+}
+#formForo button {
+  width: auto;
+  padding: 10px 20px;
+  background: #fdd835;
+  color: #2e7d32;
+}
+#formForo button:hover {
+  background: #ffee58;
+}
+
+/* ===== CALENDARIO ===== */
+.mini-calendario {
+  width: 100%;
+  text-align: center;
+}
+.mini-calendario th {
+  background: #fdd835;
+  color: #2e7d32;
+}
+.mini-calendario td {
+  padding: 5px;
+  border-radius: 5px;
+}
+.ocupado {
+  background: #a5d6a7;
+  color: #1b5e20;
+  font-weight: bold;
+}
+
+/* ===== MODAL DE RESPUESTA BONITO ===== */
+.modal-responder {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-responder.activo {
+  opacity: 1;
+}
+
+.modal-responder-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-top: 6px solid #2e7d32; /* verde institucional */
+  animation: subir 0.3s ease;
+  text-align: center;
+}
+
+.modal-responder-content h3 {
+  margin-top: 0;
+  color: #2e7d32;
+  font-size: 18px;
+}
+
+.modal-responder-content textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+}
+
+.botones-modal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.botones-modal button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.botones-modal .btnEnviar {
+  background: #2e7d32;
+  color: white;
+}
+
+.botones-modal .btnEnviar:hover {
+  background: #388e3c;
+}
+
+.botones-modal .btnCancelar {
+  background: #f4b400; /* amarillo institucional */
+  color: #333;
+}
+
+.botones-modal .btnCancelar:hover {
+  background: #fdd835;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 22px;
+  color: #888;
+  cursor: pointer;
+}
+
+.cerrar-modal:hover {
+  color: #000;
+}
+
+@keyframes subir {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

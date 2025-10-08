@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador - Altos del Gualí</title>
+  <link rel="stylesheet" href="styleAdm.css">
+</head>
+<body>
+  <!-- ====== BARRA SUPERIOR ====== -->
+  <header class="topbar">
+    <h1>Altos del Gualí - Administrador</h1>
+    <button class="logout-btn" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
+  </header>
+
+  <div class="dashboard">
+    <!-- ====== MENÚ LATERAL ====== -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" onclick="mostrarModulo('inicio')">🏠 Inicio</a></li>
+        <li><a href="#" onclick="mostrarModulo('pagos')">💳 Pagos</a></li>
+        <li><a href="#" onclick="mostrarModulo('solicitudes')">📝 Solicitudes</a></li>
+        <li><a href="#" onclick="mostrarModulo('reservas')">📅 Reservas</a></li>
+        <li><a href="#" onclick="mostrarModulo('certificados')">📄 Certificados</a></li>
+        <li><a href="#" onclick="mostrarModulo('comunicacion')">📢 Comunicación</a></li>
+        <li><a href="#" onclick="mostrarModulo('usuarios')">👥 Usuarios</a></li>
+      </ul>
+    </aside>
+
+    <!-- ====== CONTENIDO PRINCIPAL ====== -->
+    <main class="contenido" id="contenido">
+      <h2>Bienvenido</h2>
+      <p>Este es el panel de administración de Altos del Gualí.</p>
+    </main>
+  </div>
+
+  <!-- Contenedor de notificaciones -->
+  <div id="notificaciones"></div>
+
+  <script src="scriptAdm.js"></script>
+</body>
+</html>

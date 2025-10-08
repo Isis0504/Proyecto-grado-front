@@ -1,0 +1,364 @@
+/* ===== ESTILOS GENERALES ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #f7fbe8, #e1f7d5);
+  color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ===== BARRA SUPERIOR ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2e7d32; /* verde institucional */
+  color: #fff;
+  padding: 12px 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: #fdd835; /* amarillo */
+  color: #2e7d32;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  width: auto;           /* evita que ocupe todo el ancho */
+  display: inline-block; /* se ajusta al texto */
+}
+.logout-btn:hover {
+  background: #ffee58;
+  transform: scale(1.05);
+}
+
+/* ===== LAYOUT GENERAL ===== */
+.dashboard {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 220px;
+  background: #388e3c; /* verde oscuro */
+  padding-top: 20px;
+  color: #fff;
+  border-right: 3px solid #c5e1a5;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar li {
+  margin: 12px 0;
+}
+.sidebar a {
+  color: #f9fbe7;
+  text-decoration: none;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  background: #43a047;
+  color: #fff;
+  border-left: 5px solid #fdd835;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.contenido {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: #f9fff2;
+}
+.contenido h2 {
+  color: #2e7d32;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #333;
+}
+.card h3 {
+  color: #2e7d32;
+}
+
+/* ===== TABLAS ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+th {
+  background: #2e7d32;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ===== ESTADOS ===== */
+.pagado {
+  color: #2e7d32; /* verde */
+  font-weight: bold;
+}
+.pendiente {
+  color: #f9a825; /* amarillo */
+  font-weight: bold;
+}
+.aprobado {
+  color: #388e3c;
+}
+.denegado {
+  color: #e53935;
+}
+
+/* ===== FORMULARIOS ===== */
+input, select, textarea, button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+input, select, textarea {
+  background: #f9fbe7;
+}
+button {
+  background: #2e7d32;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #43a047;
+}
+
+/* ===== FORMULARIO DE NUEVA SOLICITUD ===== */
+.contenido-solicitudes .formulario {
+  max-width: 700px; /* más ancho */
+  width: 90%;
+  margin: 0 auto;
+}
+.contenido-solicitudes textarea {
+  min-height: 100px;
+}
+
+/* ===== NOTIFICACIONES ===== */
+#notificaciones {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.notificacion {
+  background: #2e7d32;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.notificacion.exito {
+  background: #4caf50;
+}
+.notificacion.error {
+  background: #e53935;
+}
+
+/* ===== COMUNICACIÓN INTERNA ===== */
+#listaAnuncios, #listaActividades, #foroMensajes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#listaAnuncios li, #listaActividades li, #foroMensajes li {
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+#listaAnuncios li::before {
+  content: "📢 ";
+}
+#listaActividades li::before {
+  content: "📅 ";
+}
+#foroMensajes li b {
+  color: #2e7d32;
+}
+#formForo {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+#formForo input {
+  flex: 1;
+}
+#formForo button {
+  width: auto;
+  padding: 10px 20px;
+  background: #fdd835;
+  color: #2e7d32;
+}
+#formForo button:hover {
+  background: #ffee58;
+}
+
+/* ===== CALENDARIO ===== */
+.mini-calendario {
+  width: 100%;
+  text-align: center;
+}
+.mini-calendario th {
+  background: #fdd835;
+  color: #2e7d32;
+}
+.mini-calendario td {
+  padding: 5px;
+  border-radius: 5px;
+}
+.ocupado {
+  background: #a5d6a7;
+  color: #1b5e20;
+  font-weight: bold;
+}
+.info {
+  background: #fff8c4;
+  border-left: 5px solid #fdd835;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  color: #5d4037;
+}
+/* === Perfil de Residente === */
+.perfil-card {
+  width: 400px;
+  margin: 0 auto;
+  text-align: left;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.perfil-card label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-top: 10px;
+}
+
+.perfil-card input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.btn-actualizar {
+  background: linear-gradient(90deg, #007c2b, #b9a100);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-actualizar:hover {
+  opacity: 0.9;
+}
+
+/* === Tabla de Usuarios (Admin) === */
+.tabla-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tabla-usuarios th {
+  background: #007c2b;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-usuarios td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-usuarios select,
+.tabla-usuarios input[type="text"] {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.tabla-usuarios button {
+  background: #b9a100;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.tabla-usuarios button:hover {
+  opacity: 0.9;
+}
+
+.estado.pendiente {
+  color: #d88b00;
+  font-weight: bold;
+}
+.estado.aprobado {
+  color: #007c2b;
+  font-weight: bold;
+}
+
