@@ -1,8 +1,5 @@
-// ===== Datos simulados / funciones globales para Certificados =====
-let solicitudesCertificados = [
-  { id: 1, tipo: "Residencia", detalle: "Constancia para banco", fecha: "2025-09-20", estado: "Pendiente" },
-  { id: 2, tipo: "Autorización", detalle: "Visita familiar", fecha: "2025-09-15", estado: "Aprobado" }
-];
+// ===== Datos iniciales (sin datos de prueba) =====
+let solicitudesCertificados = [];
 
 function actualizarListaCertificados() {
   const cont = document.getElementById("listaCertificados");
@@ -24,10 +21,8 @@ function actualizarListaCertificados() {
 }
 
 // ===== VARIABLES GLOBALES =====
-let reservas = [
-  { espacio: "Salón social", fecha: "2025-09-25", hora: "15:00" },
-  { espacio: "BBQ", fecha: "2025-09-30", hora: "19:00" }
-];
+// Reservas vacías: serán pobladas por interacciones reales
+let reservas = [];
 
 function actualizarReservas() {
   let lista = document.getElementById("listaReservas");
@@ -314,28 +309,77 @@ case 'perfil':
     <div class="card perfil-card">
       <form id="formPerfil">
         <label>Nombre:</label>
-        <input type="text" id="nombrePerfil" value="Ana Pérez" readonly>
+        <input type="text" id="nombrePerfil" name="full_name" value="" >
 
         <label>Correo:</label>
-        <input type="email" id="correoPerfil" value="ana@mail.com" readonly>
+        <input type="email" id="correoPerfil" name="email" value="" readonly>
 
         <label>Tipo de Usuario:</label>
-        <input type="text" id="tipoPerfil" value="Arrendatario" readonly>
+        <input type="text" id="tipoPerfil" name="role" value="" readonly>
 
         <label>Casa / Apartamento:</label>
-        <input type="text" id="casaPerfil" value="Torre B - 301" readonly>
+        <input type="text" id="casaPerfil" name="house" value="" >
 
         <label>Teléfono:</label>
-        <input type="text" id="telefonoPerfil" value="3123456789" placeholder="Ej: 3123456789">
+        <input type="text" id="telefonoPerfil" name="phone" value="" placeholder="Ej: 3123456789">
 
-        <button type="submit" class="btn-actualizar">Actualizar Teléfono</button>
+        <button type="submit" class="btn-actualizar">Actualizar Perfil</button>
       </form>
     </div>
   `;
 
-  document.getElementById("formPerfil").addEventListener("submit", (e) => {
+  // Cargar datos del perfil autenticado
+  (async () => {
+    try {
+      if (window.supabase) {
+  const user = await (window.supabaseGetUser ? window.supabaseGetUser() : (window.supabase && window.supabase.auth && typeof window.supabase.auth.user === 'function' ? window.supabase.auth.user() : null));
+        if (user && user.id) {
+          const { data: profile, error } = await window.supabase.from('profiles').select('*').eq('id', user.id).single();
+          if (error) {
+            console.warn('No se pudo obtener profile:', error.message);
+          } else if (profile) {
+            document.getElementById('nombrePerfil').value = profile.full_name || '';
+            document.getElementById('correoPerfil').value = profile.email || '';
+            document.getElementById('tipoPerfil').value = profile.role || '';
+            document.getElementById('casaPerfil').value = profile.house || '';
+            document.getElementById('telefonoPerfil').value = profile.phone || '';
+          }
+        }
+      } else {
+        // fallback: si se quieren cargar datos locales, implementarlo aquí
+      }
+    } catch (err) {
+      console.error('Error cargando perfil:', err);
+    }
+  })();
+
+  document.getElementById('formPerfil').addEventListener('submit', async (e) => {
     e.preventDefault();
-    mostrarNotificacion("✅ Teléfono actualizado correctamente.");
+    const full_name = document.getElementById('nombrePerfil').value.trim();
+    const house = document.getElementById('casaPerfil').value.trim();
+    const phone = document.getElementById('telefonoPerfil').value.trim();
+
+    try {
+      if (window.supabase) {
+  const user = await (window.supabaseGetUser ? window.supabaseGetUser() : (window.supabase && window.supabase.auth && typeof window.supabase.auth.user === 'function' ? window.supabase.auth.user() : null));
+        if (user && user.id) {
+          const { error } = await window.supabase.from('profiles').update({ full_name, house, phone }).eq('id', user.id);
+          if (error) {
+            mostrarNotificacion('⚠️ No se pudo actualizar el perfil: ' + error.message, 'error');
+            return;
+          }
+          mostrarNotificacion('✅ Perfil actualizado correctamente.');
+        } else {
+          mostrarNotificacion('⚠️ No hay sesión de usuario activa.', 'error');
+        }
+      } else {
+        // fallback local: actualizar UI y arrays locales si aplica
+        mostrarNotificacion('✅ Perfil actualizado (local).');
+      }
+    } catch (err) {
+      console.error(err);
+      mostrarNotificacion('⚠️ Error actualizando perfil.', 'error');
+    }
   });
   break;
 
@@ -402,28 +446,85 @@ document.addEventListener("submit", e => {
   }
 
   if (e.target.id === "formSolicitudes") {
-  const titulo = document.getElementById("titulo").value.trim();
-  const descripcion = document.getElementById("descripcion").value.trim();
-  const archivoInput = document.getElementById("archivo");
-  const archivo = archivoInput.files[0] ? archivoInput.files[0].name : "Sin archivo";
+    const titulo = document.getElementById("titulo").value.trim();
+    const descripcion = document.getElementById("descripcion").value.trim();
+    const archivoInput = document.getElementById("archivo");
+    const archivo = archivoInput.files[0] ? archivoInput.files[0].name : "Sin archivo";
 
-  if (!titulo || !descripcion) {
-    mostrarNotificacion("⚠️ Completa todos los campos obligatorios.", "error");
-    return;
+    if (!titulo || !descripcion) {
+      mostrarNotificacion("⚠️ Completa todos los campos obligatorios.", "error");
+      return;
+    }
+
+    // Intentar guardar en Supabase si está disponible
+    (async () => {
+      try {
+        if (window.supabase) {
+          let archivo_url = null;
+          if (archivoInput.files[0]) {
+            const file = archivoInput.files[0];
+            const ext = file.name.split('.').pop();
+            const fileName = `solicitudes/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+            const { data: uploadData, error: uploadError } = await window.supabase.storage.from('public').upload(fileName, file);
+            if (uploadError) {
+              console.warn('Error subiendo archivo a storage:', uploadError.message);
+            } else {
+              archivo_url = uploadData?.path || null;
+            }
+          }
+
+          const profileUser = await (window.supabaseGetUser ? window.supabaseGetUser() : (window.supabase && window.supabase.auth && typeof window.supabase.auth.user === 'function' ? window.supabase.auth.user() : null));
+          const profileId = profileUser ? profileUser.id : null;
+
+          const { data, error } = await window.supabase.from('solicitudes').insert([{ 
+            profile_id: profileId,
+            tipo: 'Solicitud',
+            detalle: `${titulo} - ${descripcion}`,
+            archivo_url: archivo_url,
+            estado: 'Pendiente'
+          }]);
+
+          if (error) {
+            console.warn('No se pudo insertar en supabase:', error.message);
+            // fallback local
+            solicitudesCertificados.push({
+              id: Date.now(),
+              tipo: "Solicitud",
+              detalle: `${titulo} - ${descripcion} (${archivo})`,
+              fecha: new Date().toISOString().slice(0,10),
+              estado: "Pendiente"
+            });
+            mostrarNotificacion("⚠️ Ocurrió un problema guardando en la nube; la solicitud se guardó localmente.", "error");
+          } else {
+            mostrarNotificacion("✅ Solicitud registrada en la base de datos.");
+          }
+        } else {
+          // fallback local
+          solicitudesCertificados.push({
+            id: Date.now(),
+            tipo: "Solicitud",
+            detalle: `${titulo} - ${descripcion} (${archivo})`,
+            fecha: new Date().toISOString().slice(0,10),
+            estado: "Pendiente"
+          });
+          mostrarNotificacion("✅ Solicitud registrada correctamente (local).", "exito");
+        }
+      } catch (err) {
+        console.error(err);
+        solicitudesCertificados.push({
+          id: Date.now(),
+          tipo: "Solicitud",
+          detalle: `${titulo} - ${descripcion} (${archivo})`,
+          fecha: new Date().toISOString().slice(0,10),
+          estado: "Pendiente"
+        });
+        mostrarNotificacion("⚠️ Ocurrió un error, la solicitud se guardó localmente.", "error");
+      } finally {
+        e.target.reset();
+        mostrarModulo("solicitudes");
+      }
+    })();
   }
-
-  solicitudesCertificados.push({
-    id: Date.now(),
-    tipo: "Solicitud",
-    detalle: `${titulo} - ${descripcion} (${archivo})`,
-    fecha: new Date().toISOString().slice(0,10),
-    estado: "Pendiente"
-  });
-
-  mostrarNotificacion("✅ Solicitud registrada correctamente.");
-  e.target.reset();
-  mostrarModulo("solicitudes");
-}
 
   if (e.target.id === "formReservas") {
     let espacio = document.getElementById("espacio").value;

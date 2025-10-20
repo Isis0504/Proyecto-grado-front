@@ -1,8 +1,5 @@
-// ===== Datos simulados / funciones globales para Certificados =====
-let solicitudesCertificados = [
-  { id: 1, tipo: "Residencia", detalle: "Constancia para banco", fecha: "2025-09-20", estado: "Pendiente" },
-  { id: 2, tipo: "Autorización", detalle: "Visita familiar", fecha: "2025-09-15", estado: "Aprobado" }
-];
+// Datos iniciales vacíos (sin datos de prueba)
+let solicitudesCertificados = [];
 
 function actualizarListaCertificados() {
   const cont = document.getElementById("listaCertificados");
@@ -23,11 +20,8 @@ function actualizarListaCertificados() {
   });
 }
 
-// ===== VARIABLES GLOBALES =====
-let reservas = [
-  { espacio: "Salón social", fecha: "2025-09-25", hora: "15:00" },
-  { espacio: "BBQ", fecha: "2025-09-30", hora: "19:00" }
-];
+// Variables globales sin datos de prueba
+let reservas = [];
 
 function actualizarReservas() {
   let lista = document.getElementById("listaReservas");
@@ -476,8 +470,65 @@ document.addEventListener("submit", e => {
   }
 
   if (e.target.id === "formSolicitudes") {
-    mostrarNotificacion("✅ Solicitud registrada correctamente.");
-    e.target.reset();
+    const titulo = document.getElementById("titulo").value.trim();
+    const descripcion = document.getElementById("descripcion").value.trim();
+    const archivoInput = document.getElementById("archivo");
+    const archivo = archivoInput.files[0] ? archivoInput.files[0].name : "Sin archivo";
+
+    if (!titulo || !descripcion) {
+      mostrarNotificacion("⚠️ Completa todos los campos obligatorios.", "error");
+      return;
+    }
+
+    (async () => {
+      try {
+        if (window.supabase) {
+          let archivo_url = null;
+          if (archivoInput.files[0]) {
+            const file = archivoInput.files[0];
+            const ext = file.name.split('.').pop();
+            const fileName = `solicitudes/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+            const { data: uploadData, error: uploadError } = await window.supabase.storage.from('public').upload(fileName, file);
+            if (uploadError) {
+              console.warn('Error subiendo archivo a storage:', uploadError.message);
+            } else {
+              archivo_url = uploadData?.path || null;
+            }
+          }
+
+          const profileUser = await (window.supabaseGetUser ? window.supabaseGetUser() : (window.supabase && window.supabase.auth && typeof window.supabase.auth.user === 'function' ? window.supabase.auth.user() : null));
+          const profileId = profileUser ? profileUser.id : null;
+
+          const { data, error } = await window.supabase.from('solicitudes').insert([{ 
+            profile_id: profileId,
+            tipo: 'Solicitud',
+            detalle: `${titulo} - ${descripcion}`,
+            archivo_url: archivo_url,
+            estado: 'Pendiente'
+          }]);
+
+          if (error) {
+            console.warn('No se pudo insertar en supabase:', error.message);
+            solicitudesCertificados.push({ id: Date.now(), tipo: 'Solicitud', detalle: `${titulo} - ${descripcion} (${archivo})`, fecha: new Date().toISOString().slice(0,10), estado: 'Pendiente' });
+            mostrarNotificacion("⚠️ Ocurrió un problema guardando en la nube; la solicitud se guardó localmente.", "error");
+          } else {
+            mostrarNotificacion("✅ Solicitud registrada en la base de datos.");
+          }
+        } else {
+          solicitudesCertificados.push({ id: Date.now(), tipo: 'Solicitud', detalle: `${titulo} - ${descripcion} (${archivo})`, fecha: new Date().toISOString().slice(0,10), estado: 'Pendiente' });
+          mostrarNotificacion("✅ Solicitud registrada correctamente (local).", "exito");
+        }
+      } catch (err) {
+        console.error(err);
+        solicitudesCertificados.push({ id: Date.now(), tipo: 'Solicitud', detalle: `${titulo} - ${descripcion} (${archivo})`, fecha: new Date().toISOString().slice(0,10), estado: 'Pendiente' });
+        mostrarNotificacion("⚠️ Ocurrió un error, la solicitud se guardó localmente.", "error");
+      } finally {
+        e.target.reset();
+        // si hay un modal, cerrarlo
+        try { cerrarModal(); } catch (e) {}
+        actualizarListaCertificados();
+      }
+    })();
   }
 
   if (e.target.id === "formReservas") {

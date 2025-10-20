@@ -1,13 +1,9 @@
-let solicitudesCertificados = [
-  { id: 1, tipo: "Residencia", detalle: "Constancia para banco", fecha: "2025-09-20", estado: "Pendiente" },
-  { id: 2, tipo: "Autorización", detalle: "Visita familiar", fecha: "2025-09-15", estado: "Aprobado" }
-];
+// Datos iniciales vacíos (sin entradas de prueba)
+let solicitudesCertificados = [];
 
 // ====== PAGOS GLOBALES ======
-let pagos = [
-  { residente: "Ana Pérez", mes: "Septiembre", valor: "$100.000", estado: "Pagado" },
-  { residente: "Carlos López", mes: "Septiembre", valor: "$100.000", estado: "Pendiente" }
-];
+// Lista de pagos vacía (poblada en producción)
+let pagos = [];
 
 // ====== FUNCION PARA ACTUALIZAR TABLA ======
 function actualizarTablaPagos() {
@@ -333,11 +329,8 @@ function mostrarModulo(modulo) {
     </table>
   `;
 
-  // Datos simulados
-  let usuarios = [
-    { id: 1, nombre: "Ana Pérez", correo: "ana@mail.com", tipo: "Arrendatario", casa: "B-301", estado: "Pendiente" },
-    { id: 2, nombre: "Carlos López", correo: "carlos@mail.com", tipo: "Dueño", casa: "A-102", estado: "Aprobado" }
-  ];
+  // Lista de usuarios inicial vacía (sin datos de prueba)
+  let usuarios = [];
 
   function renderUsuarios() {
     const tbody = document.getElementById("tablaUsuarios");
