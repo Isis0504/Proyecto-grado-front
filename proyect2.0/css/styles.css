@@ -1,0 +1,364 @@
+/* ===============================
+   VARIABLES DE COLOR
+   =============================== */
+:root {
+  --verde-principal: #2e7d32;
+  --verde-oscuro:#1b5e20;
+  --amarillo: #ffeb3b;
+  --blanco: #ffffff;
+  --gris-fondo: #f5f5f5;
+  --gris-texto: #333;
+  --sombra: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================
+   MENÚ PRINCIPAL
+   ============================ */
+#mainTabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32; /* verde */
+  padding: 0.5rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contenedor de los botones del lado izquierdo */
+#mainTabs .tabBtn {
+  background-color: #f5f5f545;
+  border: none;
+  padding: 0.6rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#mainTabs .tabBtn:hover {
+  background-color: #c8e6c9;
+}
+
+/* ===============================
+   ESTRUCTURA GENERAL
+   =============================== */
+body {
+  background-color: var(--gris-fondo);
+  color: var(--gris-texto);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===============================
+   BARRA SUPERIOR
+   =============================== */
+header {
+  background-color: var(--verde-principal);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 25px;
+  box-shadow: 0 2px 5px var(--sombra);
+}
+
+header .tituloPanel {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+header .tituloPanel span {
+  color: var(--amarillo);
+}
+
+header .bienvenida {
+  font-size: 0.9rem;
+  color: var(--blanco);
+  margin-left: 10px;
+  opacity: 0.9;
+}
+
+/* NAV SUPERIOR */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--blanco);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover,
+nav a.activo {
+  background-color: var(--amarillo);
+  color: var(--verde-oscuro);
+}
+
+/* ===============================
+   CONTENIDO PRINCIPAL
+   =============================== */
+main {
+  flex: 1;
+  padding: 30px;
+  margin: 25px auto;
+  background-color: var(--blanco);
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--sombra);
+  width: 85%;
+  max-width: 1100px;
+}
+
+/* ===============================
+   MÓDULOS Y TÍTULOS
+   =============================== */
+.tituloModulo {
+  font-size: 1.5rem;
+  color: var(--verde-principal);
+  border-bottom: 3px solid var(--amarillo);
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   TABLAS
+   =============================== */
+.tablaEstilo {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tablaEstilo th {
+  background-color: var(--verde-principal);
+  color: var(--blanco);
+  text-align: left;
+  padding: 8px;
+}
+
+.tablaEstilo td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tablaEstilo tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.tablaEstilo a {
+  color: var(--verde-principal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.tablaEstilo a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   BOTONES Y FORMULARIOS
+   =============================== */
+button,
+.btnPrimario,
+.btnSecundario {
+  border: none;
+  padding: 9px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btnPrimario {
+  background-color: var(--verde-principal);
+  color: var(--blanco);
+}
+
+.btnPrimario:hover {
+  background-color: var(--verde-oscuro);
+}
+
+.btnSecundario {
+  background-color: var(--amarillo);
+  color: var(--verde-principal);
+}
+
+.btnSecundario:hover {
+  background-color: #fdd835;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+.inputFiltro {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* ===============================
+   INFO PAGO
+   =============================== */
+.infoPago {
+  background: #e8f5e9;
+  border-left: 4px solid var(--verde-principal);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+/* ===============================
+   FORMULARIOS DE MÓDULOS
+   =============================== */
+.formContainer {
+  margin-top: 25px;
+  background-color: #f9fff8;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 8px var(--sombra);
+}
+
+.hidden {
+  display: none;
+}
+
+/* ============================
+   BOTÓN CERRAR SESIÓN
+   ============================ */
+#mainTabs .logoutBtn {
+  margin-left: auto;
+  background-color: #d32f2f;
+  color: #fff;
+  font-weight: 600;
+}
+
+#mainTabs .logoutBtn:hover {
+  background-color: #b71c1c;
+}
+
+/* ============================
+   RESPONSIVO
+   ============================ */
+@media (max-width: 768px) {
+  #mainTabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #mainTabs .tabBtn {
+    margin: 0.3rem;
+  }
+}
+
+/* ===============================
+   LOGIN Y REGISTRO
+   =============================== */
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--verde-principal), var(--gris-fondo));
+  padding: 20px;
+}
+
+.authBox {
+  background-color: var(--blanco);
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--sombra);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.authBox h2 {
+  color: var(--verde-principal);
+  margin-bottom: 25px;
+  border-bottom: 3px solid var(--amarillo);
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.authBox form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.authBox input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.authBox input:focus {
+  outline: none;
+  border-color: var(--verde-principal);
+  box-shadow: 0 0 5px var(--verde-principal);
+}
+
+.authBox button {
+  background-color: var(--verde-principal);
+  color: var(--blanco);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.authBox button:hover {
+  background-color: var(--verde-oscuro);
+}
+
+.authBox .link {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--gris-texto);
+}
+
+.authBox .link a {
+  color: var(--verde-principal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.authBox .link a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   RESPONSIVO
+   =============================== */
+@media (max-width: 500px) {
+  .authBox {
+    padding: 30px 20px;
+  }
+}
